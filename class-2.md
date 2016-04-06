@@ -27,6 +27,7 @@ comparing C++ style sort to C sorting is the thoughest.
 
 
 Note: the participant must understand:
+
 1. What is a declaration
 1. What is a definition
 1. What is a pointer
@@ -97,26 +98,27 @@ To sort:
 
 In C++, as a matter of course, the very same code works regardless of the
 following:
-*. Whether one is using a primitive array, a compile time array, a managed
+
+* Whether one is using a primitive array, a compile time array, a managed
 array, a double ended queue, or any container, including those made made by the
 programmer as long as the iterator in the container is "random access", that is,
 it allows to "jump"
-*. Intuitively there is no limitation on the type of the element in the array
+* Intuitively there is no limitation on the type of the element in the array
 as long as it makes sense to keep them in arrays and to sort them
-*. In `qsort`, there are many hard-assumptions, that is, the code will not work
+* In `qsort`, there are many hard-assumptions, that is, the code will not work
 if the arguments or types involved don't satisfy them, including:
 	1. The elements are arranged in a contiguos memory array
 	2. Swapping an element (to put it in the right place) is exactly to swap the
 	all of the raw memory of the elements --nothing more *and nothing less too*
-*. It is easy to make mistakes with `qsort`, for example, yours truly once had
+* It is easy to make mistakes with `qsort`, for example, yours truly once had
 this bug:  The array of elements was changed from integers to `long`.  I changed
 the other parameters except the comparison function.  It compiled.  It seemed to
 work just fine.  Months later, it had catastrophic crashes.  **That is, the
 enforcement of the parameters to agree with each other is not helped by the
 language nor the compiler**
-*. In `qsort`, the code resides in a binary library, *object code* already
+* In `qsort`, the code resides in a binary library, *object code* already
 compiled and ready to be used as - is
-*. In `std::sort` the compiler will use the template code and create optimal
+* In `std::sort` the compiler will use the template code and create optimal
 machine code.  This has many consequences, including:
 	1. Longer compilation times
 	2. The opportunity, which is used in practice, for the compiler to
@@ -134,7 +136,7 @@ machine code.  This has many consequences, including:
 	5. Exactly the same interface can be adapted to sort in different ways, for
 	example, using the "merge sort" algorithm for containers that don't have
 	random access iterators (that is, the iterators can't "jump")
-*. The occurrence of an error, for example, the process running out of temporary
+* The occurrence of an error, for example, the process running out of temporary
 memory to perform the sorting, is a fatal error in qsort, whereas it may be
 a trivially recoverable error in C++
 
@@ -144,7 +146,7 @@ learn quite a lot.  Most programmers know only about their application domain,
 they don't care about the benefits of C++ features; and they definitively don't
 bother to learn C++.
 
-Aperitif:
+### Aperitif:
 
 A function that will sort containers and primitive arrays just the same:
 
