@@ -1,3 +1,57 @@
+## Class #2
+
+We made sure to have a sufficiently good understanding of what was a "resource"
+
+The subject of the lifetime of local objects was covered
+
+The order of creation and destruction of class member variables was covered
+
+The subject of exception propagation while partially creating objects was
+covered.
+
+These rules can be summarized with:  When the program execution leaves a scope
+(block of code, initializer list, etc) all of the variables fully constructed
+will be destroyed.
+
+This subject is IMO extremely important because many awesome techniques that at
+the same time reduce programming effort, give performance and reliability
+can only be used effectively if the programmer has very clear understanding of
+the lifetime of objects.
+
+In particular, if the resources are modelled through handlers in which the
+resources are acquired in the constructor of the handler and released in the
+destructor, then knowing the lifetime of objects
+
+* guarantees knowing when the resources are released
+* that there are no resource leaks
+* allows to program optimistically (without any extra effort the rules of the
+language will release resources automatically in the presence of exceptions,
+thus, code not interested in dealing with errors can *simply and safely ignore
+them!*, deferring to code actually interested in dealing with the errors)
+
+Bjarne Stroustrup invented the term and acronym "RAII", which stands for
+"Resource Acquisition Is Initialization", and means what was just explained
+above.
+
+Furthermore, the "handlers" technique, RAII, allows very straightforward code
+reuse and code generalization, both generalization in the "Object Oriented"
+way and "Generic Programming" way.  These benefits will be explored later in the
+course.
+
+To complete this aspect we will start next class with the rules for the lifetime
+of base classes, considerations about dynamic polymorphic classes (that is,
+classes with `virtual` member functions or `virtual` base classes).
+
+We will also go over techniques to program inherently "retriable" code and fully
+achieve optimistic programming.  At the core of these techniques are a
+*transactional* attitude towards changing the *global state* of the running
+program or system which is good in its own right.  We will talk about preventing
+irreversible changes.  This is a contributor factor for the raise in popularity
+of the functional programming paradigm that among its fundamental tenets tries
+to avoid chaning the state of execution, an area particularly active of C++
+development of libraries, *idioms*, and new language features to better support
+them.
+
 #### Class 1 code
 
 #### Comparison between sorting in C++ and C
