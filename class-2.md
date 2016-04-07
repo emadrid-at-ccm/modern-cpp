@@ -33,7 +33,7 @@ Note: the participant must understand:
 1. What is a pointer
 2. What is a const pointer
 3. What is a void pointer
-4. That all pointers are convertible to const void *
+4. That all pointers are convertible to `const void *`
 5. Converting a `void *` to a pointer to some other type is called "casting"
 the pointer
 16. Convertibility of pointers
