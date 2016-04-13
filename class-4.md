@@ -12,8 +12,9 @@ mistake.
 3. Penalty of unnecessary destructor
 4. My hope that eventually this gets changed to no-state "pre-destroyed"
 
-### The rule of zero, rule of three, rule of 5 (at cppreference.com)
-[http://en.cppreference.com/w/cpp/language/rule_of_three]
+### The rule of zero, rule of three, rule of 5
+[at cppreference.com]
+(http://en.cppreference.com/w/cpp/language/rule_of_three)
 
 ### What is the cost of exception support?
 
@@ -23,8 +24,8 @@ mistake.
 exceptions themselves
 
 The old technique: thunking.  The new: "zero-cost": Doing searches in
-collections of code address ranges.  (Interesting blog link)
-[https://mortoray.com/2013/09/12/the-true-cost-of-zero-cost-exceptions/]
+collections of code address ranges.  [Interesting blog link]
+(https://mortoray.com/2013/09/12/the-true-cost-of-zero-cost-exceptions/)
 
 ### Why not error codes
 
