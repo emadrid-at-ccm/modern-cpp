@@ -12,6 +12,8 @@ mistake.
 3. Penalty of unnecessary destructor
 4. My hope that eventually this gets changed to no-state "pre-destroyed"
 
+Note: the annotation `noexcept` is hopelessly broken
+
 ### The rule of zero, rule of three, rule of 5
 [at cppreference.com]
 (http://en.cppreference.com/w/cpp/language/rule_of_three)
@@ -29,9 +31,10 @@ collections of code address ranges.  [Interesting blog link]
 
 ### Why not error codes
 
-1. Intrusive
-2. Error prone, manual
-3. How do you propagate called errors to callers?
+0. Intrusive
+1. Error prone, manual
+2. How do you propagate called errors to callers?
+3. It is a pain to have functions that return several values
 4. Anti-performance:
 	1. Needs a test, even though the test will consistently go to the no-error
 	branch, and thus the processor will successfully predict, it will still tax
@@ -55,6 +58,18 @@ collections of code address ranges.  [Interesting blog link]
 
 How to achieve the strong exception safety?:  Transactional code:  Committ
 only when you know no error will happen.
+
+### What else about exceptions?
+
+1. Limitations:
+	1. Exceptions indicate the error, not the goal (Andrei Alexandrescu)
+	[https://channel9.msdn.com/Shows/Going+Deep/C-and-Beyond-2012-Andrei-Alexandrescu-Systematic-Error-Handling-in-C]
+	so, try to make your exceptions descriptive of the goal
+	2. There can only be one exception in flight
+	3. Open question, how to indicate successive errors?
+		1. Use a fallback error policy, like logging
+2. You may make a hybrid
+	1. Perhaps you should investigate the topic of "type erasure".
 
 ### Smart Pointers
 
