@@ -62,8 +62,8 @@ only when you know no error will happen.
 ### What else about exceptions?
 
 1. Limitations:
-	1. Exceptions indicate the error, not the goal (Andrei Alexandrescu)
-	[https://channel9.msdn.com/Shows/Going+Deep/C-and-Beyond-2012-Andrei-Alexandrescu-Systematic-Error-Handling-in-C]
+	1. Exceptions indicate the error, not the goal (see [Andrei Alexandrescu C++ and Beyond 2012]
+	(https://channel9.msdn.com/Shows/Going+Deep/C-and-Beyond-2012-Andrei-Alexandrescu-Systematic-Error-Handling-in-C))
 	so, try to make your exceptions descriptive of the goal
 	2. There can only be one exception in flight
 	3. Open question, how to indicate successive errors?
@@ -77,15 +77,15 @@ only when you know no error will happen.
 * `auto_ptr` was a failure
 * boost `scoped_ptr`, `shared_ptr`, `intrusive_ptr`
 * C++11:
-	* unique_ptr
+	* `unique_ptr`
 		* Requires *move semantics*
 		* Cost?
-	* shared_ptr
+	* `shared_ptr`
 		* The common implementation is two pointers worth of space
-	* There is no intrusive_ptr
-		* intrusive_ptr has the issue of being intrusive!
+	* There is no `intrusive_ptr`
+		* `intrusive_ptr` has the issue of being intrusive!
 			* So what?
-	* yasop
+	* `yasop`
 
 War stories of implementing yasop:
 
