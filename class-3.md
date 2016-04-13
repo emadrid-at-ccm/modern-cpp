@@ -31,6 +31,7 @@ The RAII pattern allows the management of resources of *arbitrary complexity*
 ### Composition
 
 C++ has excellent data composition rules:
+
 1. Allows the definition of memory layouts of arbitrary size, complexity and internal structure
 	1. Contiguous
 2. Granularity up to the individual bit
