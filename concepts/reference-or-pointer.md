@@ -2,10 +2,13 @@
 
 References are pointers, the important differences are:
 
+0. Pointers are created by taking the address of something or using pointer arithmetic,
+references are *bound* to an already existing object
 1. References must refer to a valid object, pointers can be null
 2. References are already de-referenced syntactically:
 
-        auto &reference = something; // 'reference' is a reference to 'something'
+        auto &reference = something;
+        // 'reference' is a reference to 'something'
         auto somethingPtr = &something;
 syntactically, using `reference` is exactly the same as if you'd use `(*somethingPtr)`
 3. References can not be rebound, pointers can be changed to point to something else
@@ -30,16 +33,18 @@ for operations, then *indirecting* through memory may prevent the compiler from 
 it already has in the registers, and force it to reload it from memory all the time, which
 at that point becomes a pessimization.
 
+#### Value semantics
+
 This is another reason why in recent C++ the capability of the language to preserve
-value-semantics (as opposed to, for example, Java, Python, etc that only have referential
+value-semantics (as opposed to, for example, Java, Python, etc. that only have referential
 semantics) is getting more and more important, better supported, the community is developing
-idioms to benefit from it.  This is another example of efforts undergoing to get more
-reliability (using values instead of references is inherently more reliable because each
-thing has its value as opposed to the values being shared and potentially changed *underneath*
-our code), it is easy to program because one is free to change the values as desired, and
-there is an extra of performance: easier to parallelize code, better utilization of large
-register files, elimination of memory aliasing, false sharing performance pits.  Gaining
-reliability, reducing effort and increasing performance all at the same time...
+idioms to benefit from it.  This is another example of efforts undergoing to get all three
+of reliability, reduced effort and increased performance: using values instead of references
+is inherently more reliable because each thing has its value as opposed to the values being
+shared and potentially changed *underneath* our code, it is easy to program because one is
+free to change the values as desired, and there is an extra of performance: easier to
+parallelize code, better utilization of large register files, elimination of memory aliasing,
+false sharing performance pits.
 
 All the things mentioned apply to r-value references too, but r-value references have the same
 syntax as forwarding references (also called *universal* references).  In the following
