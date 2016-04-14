@@ -47,7 +47,7 @@ collections of code address ranges.  [Interesting blog link]
 		section
 5. Make it harder to associate information about the context of the error:
 	1. Global variables: thread unsafe, non-reentrant mechanisms `errno`
-	2. Also requires the mapping from the code to the information
+	2. Also requires the mapping from the code to the information, for example `perror`
 6. It does not enjoy the natural structuring of exceptions:
 	* The standard library std::exception is a hierarchy!
 
