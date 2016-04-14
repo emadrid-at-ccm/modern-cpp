@@ -22,6 +22,7 @@ Note: the annotation `noexcept` is hopelessly broken
 
 1. Stack frames
 2. Determining what to destroy
+3. Whether the exception matches a handler for the current frame
 3. Destruction of frames is not part of the cost of exception support, but of
 exceptions themselves
 
@@ -35,6 +36,7 @@ collections of code address ranges.  [Interesting blog link]
 1. Error prone, manual
 2. How do you propagate called errors to callers?
 3. It is a pain to have functions that return several values
+    1. Please use [`std::stoi`](http://en.cppreference.com/w/cpp/string/basic_string/stol), [`std::stof`](http://en.cppreference.com/w/cpp/string/basic_string/stof) and so on instead of `atoi`, `atof`
 4. Anti-performance:
 	1. Needs a test, even though the test will consistently go to the no-error
 	branch, and thus the processor will successfully predict, it will still tax
