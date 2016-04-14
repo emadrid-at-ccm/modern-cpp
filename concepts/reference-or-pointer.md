@@ -18,6 +18,8 @@ syntactically, using `reference` is exactly the same as if you'd use `(*somethin
 5. Non-modifiable references (`const` references) can bind to constants that don't even
 have a location in memory, that is, this works: `const int &cir = 5`
 
+It is always possible to get the pointer associated with a reference, use the `&` operator.
+
 Since passing by value implies copying the values, in traditional C++ we have adopted the idiom
 of passing by const-reference as a micro-optimization instead.  As seen above, one can bind
 const-references to constants but for a constant to be bound to a const-reference, you should
@@ -28,7 +30,16 @@ for operations, then *indirecting* through memory may prevent the compiler from 
 it already has in the registers, and force it to reload it from memory all the time, which
 at that point becomes a pessimization.
 
-It is always possible to get the pointer associated with a reference, use the `&` operator.
+This is another reason why in recent C++ the capability of the language to preserve
+value-semantics (as opposed to, for example, Java, Python, etc that only have referential
+semantics) is getting more and more important, better supported, the community is developing
+idioms to benefit from it.  This is another example of efforts undergoing to get more
+reliability (using values instead of references is inherently more reliable because each
+thing has its value as opposed to the values being shared and potentially changed *underneath*
+our code), it is easy to program because one is free to change the values as desired, and
+there is an extra of performance: easier to parallelize code, better utilization of large
+register files, elimination of memory aliasing, false sharing performance pits.  Gaining
+reliability, reducing effort and increasing performance all at the same time...
 
 All the things mentioned apply to r-value references too, but r-value references have the same
 syntax as forwarding references (also called *universal* references).  In the following
