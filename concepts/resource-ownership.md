@@ -32,8 +32,8 @@ to indicate to the resource it won't be sharing its ownership, if there are no
 more `shared_ptr` on the same object, then the last to participate in the
 ownership is the sole owner, and that is the point of destruction.  This may be
 a performance disadvantage; if the resources associated with the dynamic object
-can be held longer, the ownership can be `transferred` to a collector software
-component.
+can be held longer, the ownership can be *transferred* to a collector software
+component, or the collector may have shared it the whole time.
 
 In languages that have tracing garbage collection, in this terminology, all
 references are sharing ownership references, then the relationship of
