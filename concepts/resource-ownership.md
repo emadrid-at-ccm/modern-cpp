@@ -46,7 +46,7 @@ By allowing the expression of non-owning references, and fine grained choices
 for ownership, **in C++ it is possible to routinely achive performance in the
 management of resources that can only be obtained with ad-hoc resource
 management, but while at the same time getting varying degrees of reliability
-and economy of effort**.
+and economy of effort beyond what's possible with ad-hoc resource management**.
 
 The choices about the ownership considerations regarding data relationships is
 one area that leads to very different levels of software quality depending on
