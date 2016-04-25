@@ -22,6 +22,7 @@ Note: the annotation `noexcept` is hopelessly broken
 
 1. Stack frames
 2. Determining what to destroy
+3. Whether the exception matches a handler for the current frame
 3. Destruction of frames is not part of the cost of exception support, but of
 exceptions themselves
 
@@ -35,6 +36,7 @@ collections of code address ranges.  [Interesting blog link]
 1. Error prone, manual
 2. How do you propagate called errors to callers?
 3. It is a pain to have functions that return several values
+    1. Please use [`std::stoi`](http://en.cppreference.com/w/cpp/string/basic_string/stol), [`std::stof`](http://en.cppreference.com/w/cpp/string/basic_string/stof) and so on instead of `atoi`, `atof`
 4. Anti-performance:
 	1. Needs a test, even though the test will consistently go to the no-error
 	branch, and thus the processor will successfully predict, it will still tax
@@ -45,7 +47,7 @@ collections of code address ranges.  [Interesting blog link]
 		section
 5. Make it harder to associate information about the context of the error:
 	1. Global variables: thread unsafe, non-reentrant mechanisms `errno`
-	2. Also requires the mapping from the code to the information
+	2. Also requires the mapping from the code to the information, for example `perror`
 6. It does not enjoy the natural structuring of exceptions:
 	* The standard library std::exception is a hierarchy!
 
@@ -62,8 +64,8 @@ only when you know no error will happen.
 ### What else about exceptions?
 
 1. Limitations:
-	1. Exceptions indicate the error, not the goal (Andrei Alexandrescu)
-	[https://channel9.msdn.com/Shows/Going+Deep/C-and-Beyond-2012-Andrei-Alexandrescu-Systematic-Error-Handling-in-C]
+	1. Exceptions indicate the error, not the goal (see [Andrei Alexandrescu C++ and Beyond 2012]
+	(https://channel9.msdn.com/Shows/Going+Deep/C-and-Beyond-2012-Andrei-Alexandrescu-Systematic-Error-Handling-in-C))
 	so, try to make your exceptions descriptive of the goal
 	2. There can only be one exception in flight
 	3. Open question, how to indicate successive errors?
@@ -77,15 +79,15 @@ only when you know no error will happen.
 * `auto_ptr` was a failure
 * boost `scoped_ptr`, `shared_ptr`, `intrusive_ptr`
 * C++11:
-	* unique_ptr
+	* `unique_ptr`
 		* Requires *move semantics*
 		* Cost?
-	* shared_ptr
+	* `shared_ptr`
 		* The common implementation is two pointers worth of space
-	* There is no intrusive_ptr
-		* intrusive_ptr has the issue of being intrusive!
+	* There is no `intrusive_ptr`
+		* `intrusive_ptr` has the issue of being intrusive!
 			* So what?
-	* yasop
+	* `yasop`
 
 War stories of implementing yasop:
 
