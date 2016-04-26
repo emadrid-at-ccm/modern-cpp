@@ -37,3 +37,8 @@ the reference count whether the instance was created with `make_shared` or `new`
 * `yasop` only supports a subset of convertibility between derived and base
 classes: when the base is at offset 0 in the derived.
 
+#### CRTP
+
+The curiously recurring template pattern:
+We saw how in `boost::intrusive_ptr` and `yasop` there is the use of inheritance to 'inject' functionality into the derived class
+
