@@ -73,4 +73,4 @@ The rules of the language allows the expression of patterns of types for the com
 2. The overload set
 3. Expressing patterns through substitution failure (SFINAE)
 
-Presentation by Martin Isaacson
+Presentation by Mark Isaacson
