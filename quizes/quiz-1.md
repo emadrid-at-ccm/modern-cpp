@@ -57,9 +57,16 @@ Assume `SomeType` defines a instance member function `bool compare(SomeType) con
 
 Should the following compile (is it a reasonable expectation that it compiles)?
 
-	template<typename Iterator, typename Callable> void mysort(Iterator begin, Iterator end, Callable v);
+	template<typename Iterator, typename Callable>
+	void mysort(Iterator begin, Iterator end, Callable v);
 	void fun(SomeType *start, SomeType *end, bool direct) {
-		mysort(start, end, [=](SomeType p1, SomeType p2)->bool { return direct ? p1.compare(p2): p2.compare(p1); });
+		mysort(
+		    start,
+		    end,
+		    [=](SomeType p1, SomeType p2)->bool {
+		        return direct ? p1.compare(p2): p2.compare(p1);
+		    }
+		);
 	}
 
 Is there any objection to the code above you can think?
