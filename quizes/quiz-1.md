@@ -133,10 +133,10 @@ Consider this code for the following questions:
 3. Implicit conversion of `Token2` to `Token1`
 4. Implicit conversion from `A` to `B`
 5. Implicit conversion from `Token` to `B`
-6. Does this compile `consumes_B(theA);`
+6. Does this compile `consumes_B(theA);`?
 7. `consumes_B(theToken1);`
 8. `consumes_B(theC);`
-6. Does this compile `consumption(B{theA});`
+6. Does this compile `consumption(B{theA});`?
 7. `consumption(theToken1)`;
 8. `consumption(theC)`;
 
