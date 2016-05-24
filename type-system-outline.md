@@ -6,12 +6,14 @@ I started the subject of the type system showing a presentation by [Mark
 Isaacson](https://vimeo.com/131194141) in which he shows how the type system can
 be used for code reuse.  This code reutilization is maximal in terms of the
 three objectives we are aiming for
+
 1. Saving effort
 2. Improving reliability
 3. Improving performance
 
 It also develops the subject not based on C++ features, but by objectives.
 Roughly speaking, the progression of features used is this:
+
 1. Overloads
 2. Templates
 3. Generic programming
