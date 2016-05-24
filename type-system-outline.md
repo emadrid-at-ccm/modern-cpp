@@ -87,8 +87,8 @@ in C++, then became a frequent source of accidental complexity.  Examples:
 	- YASOP
 
 #### Variant types
-	- Type erasure
-	- Limited automatic convertibility
+- Type erasure
+- Limited automatic convertibility
 
 #### Duck typing
 
