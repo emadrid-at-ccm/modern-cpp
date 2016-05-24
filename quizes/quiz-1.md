@@ -132,7 +132,7 @@ Consider this code for the following questions:
 2. What about `call_on_const_reference(5)`?
 3. Implicit conversion of `Token2` to `Token1`
 4. Implicit conversion from `A` to `B`
-5. Implicit conversion from `Token` to `B`
+5. Implicit conversion from `Token1` to `B`
 6. Does this compile `consumes_B(theA);`?
 7. `consumes_B(theToken1);`
 8. `consumes_B(theC);`
