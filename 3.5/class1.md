@@ -1,0 +1,165 @@
+## C++ 3.5
+
+#### This course is the third and a half iteration.
+
+1. First iteration: pure C++
+
+1. Second iteration: more practical C++
+
+1. Second and a half iteration: more fundamentals
+
+1. Third and a half: Mathematical and functional programming C++
+
+#### Why C++?
+
+*Mathematics is organized reasoning* by Richard P. Feynman, Nobel prize winner
+in Physics, and a celebrity.
+
+My doctrine of software engineering is that we deal with the complexity of
+making billions upon billions of software elements work together.  The elements
+in Software engineering are pure abstractions, and discrete.  Therefore,
+programming is organizing software elements.
+
+What are well organized software components?
+
+What is accomplished by well organized software components?
+
+"Premature optimization is the root of all evil", by Donald E. Knuth
+
+The techniques to be studied do **not** have high performance as their direct
+aim.  The aim is to empower the participant to organize software elements in
+ways more optimal than practically feasible with other languages at the same
+order of magnitude of performance.  This is an absolute, not relative aim.  That
+is, its objective is not to allow participants to express things in C++, but
+to express things in ways that are so nearly optimal that only C++ is a good
+choice.  In particular, to achieve more reliable software spending less
+effort.  Performance is an indirect consequence: If the techniques
+do not have a performance cost by themselves, but allow better organized
+software, then they make possible to achieve higher performance by making it
+practical to improve the performance tradeoffs of implementations and by
+informing the compiler more about what the program does which gives it the
+opportunity to accomplish more micro optimizations.
+
+I am a software performance expert, we can go full tilt in this topic if the
+audience desires it, which allows learning advanced computing in general.
+
+The three most important concepts are:
+
+1. Coupling
+2. Cohesion
+3. Orthogonality
+
+C++ is among the top three languages I know to organize software components, the
+other two are Lisp and dialects and Haskell.  Javascript is not far.  Perl is
+extremely powerful but burdened by *accidental complexity*
+
+* Lisp: Zero-syntax, then arbitrarily high levels of abstraction can be
+accomplished by lisp code that generates lisp code that ... does something.
+Macros.
+
+* Haskell: Excellent representative of the "Functional Programming" paradigm.
+*functional programming* (by the way, Lisp, Perl, Javascript are functional, not
+C++) is characterized by functions being data elements.  Programs routinely
+compose functions and treat them as any other value.  Attendant are concepts
+like lexical closures: Just like in Object Orientation data structures have
+their member functions; in Functional languages functions have their data
+("*closures*")
+
+None of Lisp, ... have zero-performance cost abstractions.  Increasing levels
+of abstraction increase the performance penalty.  C++ is very singular in
+allowing abstraction mechanisms that far from having a performance cost actually
+have indirect performance benefits.
+
+For example, C++ relies on templates when other languages rely on runtime
+support mechanisms; C++ gives choices to programmers, other languages restrict
+choices; practially all other languages rely on intrusive mechanisms while
+C++ is rather peculiar in the natural way in which non-intrusive mechanisms
+allow the expression of very powerful abstractions.
+
+C++ is the best representative of "Generic Programming".  Roughly speaking,
+making the types parameters of the code.  Generic Programming is to a degree
+*metaprogramming*, making programs that reasons about themselves.  In any case,
+C++ code informs much more the compiler about what the program does.
+
+One practical concern is to being able to express relationships between
+software elements, if the relationships are not encoded then programmers can not
+take advantage of them.  That is why in my software engineering doctrine I give
+great importance to expressivity.
+
+Complexity relates exponentially to the number of constituents.
+
+I hate Python because it is an extremely poor language.  Being a poor language
+makes it popular, because it does not require knowledge to use.  The drawback
+is that it does not allow to express knowledge if you have it.  Popularity
+causes a networking effect which expresses in the availability of exponential
+quantities of effort.  Thus, a poor language like Python at the same time
+suffers and benefits from the poverty of its expressivity.  I hate Java
+vehemently, I consider it an intellectual vice because its asphixiating poverty
+forces you to abuse Object Orientation to deal with challenges in the
+territories where Orientation fails miserably, thus its programmer develops
+increasingly bizarre modelling of software elements that become an intellectual
+vicious cycle.
+
+#### Inherent versus Accidental complexities (credit to Rohan Berdarkar)
+
+Accidental complexity is the complexity as a result of mismodelling, things that
+are complicated because of poor understanding.  C++ abounds in accidental
+complexity, not really because the poor understanding is the fault of its
+designers, but because its pioneering history.  C++ acquired features to express
+promising programming techniques, but the programming techniques were
+necessarily not well understood.  The cultural choice made in the C++ community
+is to live with the mistakes, to not invalidate code that relies on previous
+iterations of the language where things were not as well understood.
+
+For example, as Stephen Dewhurst put it, metaprogramming was *discovered*, not
+*designed* into C++.  Because C++ pioneered support for Generic Programming
+techniques, it acquired features powerful enough for crude metaprogramming,
+and those techniques started to be used as in expression templates, and the
+community realized there were actual practical benefits from using it, despite
+its huge accidental complexity.  Once it was better understood, revisions such
+as C++ 11 made it two or three orders of magnitude easier.
+
+Dealing with C++'s accidental complexity is a different experience as in other
+languages:  It helps you understand where the programming technique or the C++
+feature fell short or manifests poor understanding; frequently a superior way
+has also been developed, and thus the net result is a powerful learning
+experience allowed by seeing how real life understanding of things improved over
+time.
+
+For example, we will see how the Standard Template Library is what I classify
+as a major accomplishment of our civilization; despite how vastly superior it is
+today to anything developed in any other language in the nearly 20 years since
+it arose; currently C++ is on the verge of providing a significant update that
+reflects a superior understanding of its merits, such as the concepts of ranges.
+
+Thus, learning the ugly and quirky parts of C++ makes you in absolute terms a
+better programmer.
+
+## C++ bad reputation
+
+C++ is hard to understand, easy to misunderstand.  It is a language for
+practitioners, hostile to theoriticians, and it does not have sponsorship of
+any kind except us its programmers.
+
+Most currently taught C++ is horrible bad.  The worst mistakes are emphasized as
+the mainstream way to program in it.
+
+Another related problem is that people who is completely ignorant of what C++
+truly is sincerely think and have a public reputation of knowing what C++ is, so
+their comments perpetuate an extreme misunderstanding of what it truly is.
+
+The course has as its objective to empower the participants to see for
+themselves the true power of C++, it succeeded in its previous two iterations.
+
+Mathematics is how our civilization organizes thought, this time I will be less
+tolerant of proven bad approaches and will emphasize more the conceptual
+dimension behind the good ideas.  There is an underlying conceptual continuum of
+development behind C++ good ideas, that's where the emphasis will be made.  I
+intend to use templates unapologetically, every time where it makes more sense
+than not.  I've seen that people are scared of embracing generic programming
+because it is a very different way of programming; I have come to realize
+the skills about doing generic programming relate to capturing the more
+essential characteristics of the desired software elements, thus, generic
+programming requires deeper reasoning about the thing being programmed, and
+the result is better software.  **This course is very different** to the normal
+way C++ is taught.
