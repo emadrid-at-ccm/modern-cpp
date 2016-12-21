@@ -181,12 +181,12 @@ has also been developed, and thus the net result is a powerful learning
 experience allowed by seeing how real life understanding of things improved over
 time.
 
-There are  we will see how the Standard Template Library is what I classify
-as a major accomplishment of our civilization; despite how vastly superior it is
-today to anything comparable developed in any other language in the nearly 20
-years since it arose; currently C++ is on the verge of providing a significant
-update that reflects a superior understanding of its merits, such as the concepts
-of ranges.
+There are examples of successes, we will see how the Standard Template Library
+is what I classify as a major accomplishment of our civilization; despite how
+vastly superior it is today to anything comparable developed in any other
+language in the nearly 20 years since it arose; currently C++ is on the verge of
+providing a significant update that reflects a superior understanding of its merits,
+such as the concepts of ranges.
 
 Thus, learning the ugly and quirky parts of C++ makes you in absolute terms a
 better programmer.
@@ -210,14 +210,32 @@ themselves the true power of C++, it succeeded in its previous two iterations,
 thanks to previous success, I will raise the level of trust required to expose
 this even more differently.
 
-Mathematics is how our civilization organizes thought, this time I will be less
-tolerant of proven bad approaches and will emphasize more the conceptual
-dimension behind the good ideas.  There is an underlying conceptual continuum of
-development behind C++ good ideas, that's where the emphasis will be made.  I
-intend to use templates unapologetically, every time where it makes more sense
-than not, as well as other techniques; you'll see how the correct application
+## Epistemological theory, part 2
+
+If encoding knowledge is the key to make good software, it follows that using
+whatever is good for that must resemble Mathematics because that is what our
+civilization uses to organize thought.  I have been gradually awakening to
+the realization that Generic Programming strives for the sharpness (cohesiveness
+and conceptual orthogonality) of mathematical theories and then Generic
+Programming is indisputably a sound way to organize software elements.
+
+This time I will be less tolerant of proven bad approaches and will emphasize
+more the conceptual dimension behind the good ideas, that is, I will be more
+aggressive in sparing you the noise and confusion of not-best ideas by going
+quicker to the best idea.  Fear not about dogmatism because like Paul Graham
+says in the section "The Blub Paradox" in his classic essay ["Beating the Averages"](http://paulgraham.com/avg.html)
+programming languages do vary greatly in power, from the perspective of being
+able to program in very powerful ways, the defficiencies of not-best ideas
+tend to be obvious to you; what I mean is that I intend to be less respectful
+of the programming experience you have, the first task at hand is to prove it
+invalid, and the method will be conceptual as opposed to concrete.
+
+There is an underlying conceptual continuum of development behind C++ good ideas,
+that's where the emphasis will be made.  I intend to use templates unapologetically,
+every time where it makes more sense than not, as well as other techniques; you'll
+see how the correct application
 of techniques have further consequences, including programming in a different
-style.  I've seen that people are scared of embracing generic programming
+style.  I've seen people are scared of embracing generic programming
 because it is a very different way of programming; I have come to realize
 the skills about doing generic programming relate to capturing the more
 essential characteristics of the desired software elements, thus, generic
