@@ -48,6 +48,8 @@ The three most important concepts are:
 2. Cohesion
 3. Orthogonality
 
+We will recurrently improve our understanding of them along the whole course.
+
 C++ is among the top three languages I know to organize software components, the
 other two are Lisp and dialects and Haskell.  Javascript is not far.  Perl is
 extremely powerful but burdened by *accidental complexity*
@@ -76,18 +78,22 @@ accessible from C++, such as computed jump tables, but in my opinion it is so
 feasible to make the features available that I have tought of branching clang
 to implement them.
 
-For an example of abstraction mechanisms, C++ relies on templates when other
-languages rely on runtime support; C++ gives choices to programmers, other
-languages restrict choices; practically all other languages rely on intrusive
-mechanisms while C++ is rather peculiar in the natural way in which
-non-intrusive mechanisms allow the expression of very powerful abstractions.
+For an example of abstraction mechanisms, C++ relies on templates (a feature
+that acts at compilation time) when other languages rely on runtime support;
+C++ gives choices to programmers, other languages restrict choices; practically
+all other languages rely on intrusive mechanisms while C++ is rather peculiar
+in the natural way in which non-intrusive mechanisms allow the expression of
+very powerful abstractions.
 
 C++ is the best representative of "Generic Programming".  Roughly speaking,
 making the types parameters of the code, or that the code does not concern
-itself with irrelevant details of the types it deals with.  Generic Programming
-is to a degree *metaprogramming*, making programs that reasons about themselves.
+itself with irrelevant details of the types it deals with.  We will later
+define what a data type is.  Generic Programming is to a degree
+*metaprogramming*, making programs that reasons about themselves.
 In any case, C++ code informs much more the compiler about what the program
 does, then it helps detecting errors and optimizing.
+
+### Epistemological theory of software engineering
 
 One practical concern is to being able to express relationships between
 software elements, if the relationships are not encoded then programmers can not
@@ -109,17 +115,22 @@ is because knowledge can only be encoded with expressivity.  Applying my
 epistemological theory of software engineering is my fundamental inspiration
 for this course.
 
-If you don't have knowledge to encode in your code, expressivity is a burden.
-Reputedly, J.R.R. Tolkien wrote the lore of what later became the Silmarillion
-and probably all of the Lord of the Rings because for what he really wanted to
-do, his elfish languages, would be an empty exercise: a language can not be
-any good if it does not have lore, mythology, written in it.  Fortunately,
-this is not our problem.  What we will be doing, ultimately, is to learn
-how to express our knowledge into programming code beyond what we've ever
-done.  Please be more demanding of yourselves in terms of being able to
-express into programming code your knowledge.  You can start by identifying
-the times you think you are "repeating yourself", when you suspect you are
-programming again something you have already programmed.
+If you don't have knowledge to encode in your code, expressivity is a burden,
+it leads to confusion. Fortunately, this is not our problem.  What we will be
+doing, ultimately, is to learn how to express our knowledge into programming
+code beyond what we've ever done.  Please be more demanding of yourselves in
+terms of being able to express into programming code your knowledge.  You can
+start by identifying the times you think you are "repeating yourself", when
+you suspect you are programming again something you have already programmed.
+
+Reputedly, J.R.R. Tolkien wrote the lore of what later became the
+Silmarillion and probably all of the Lord of the Rings because for what he
+really wanted to do, his elfish languages; otherwise they would have been an
+empty exercise: a human language can not be any good if it does not have
+lore, mythology, written in it.  The features in C++ that support programming
+techniques are futile unless there are applications for them, I can introduce
+the features, but they are solutions in search of problems, you supply the
+problem.
 
 I also become better every time I teach this subject because the
 exposition of the techniques of how to encode knowledge in programming code
@@ -136,18 +147,22 @@ vehemently, I consider it an intellectual vice because its asphixiating poverty
 forces you to abuse Object Orientation to deal with challenges in the
 territories where O. Orientation fails miserably, thus its programmer develops
 increasingly bizarre modelling of software elements that become an intellectual
-vicious cycle.
+vicious cycle.  This opinion is informed by the fact that I used to be a
+professional Java programmer.  As a matter of fact, my most successful
+software engineering effort thus far has been leveraging a Java specific feature,
+its "reflection" API.
 
-#### Inherent versus Accidental complexities (credit to Rohan Berdarkar)
+#### Inherent versus Accidental complexities
 
-Accidental complexity is the complexity as a result of mismodelling, things that
-are complicated because of poor understanding.  C++ abounds in accidental
-complexity, not because the poor understanding is the fault of its
-designers, but because its pioneering history.  C++ acquired features to express
-promising programming techniques, but the programming techniques were
-necessarily not well understood.  The cultural choice made in the C++ community
-is to live with the mistakes, to not invalidate code that relies on previous
-iterations of the language where things were not as well understood.
+I adopted the terms from former coworker Rohan Berdarkar: Accidental complexity
+is the complexity as a result of mismodelling, things that are complicated
+because of poor understanding.  C++ abounds in accidental complexity, not because
+the poor understanding is the fault of its designers, but because its pioneering
+history.  C++ acquired features to express promising programming techniques, but
+the programming techniques were necessarily not well understood.  The cultural
+choice made in the C++ community is to live with the mistakes, to not invalidate
+code that relies on previous iterations of the language where things were not as
+well understood.
 
 For example, as Stephen Dewhurst put it, metaprogramming was *discovered*, not
 *designed* into C++.  Because C++ pioneered support for Generic Programming
@@ -166,7 +181,7 @@ has also been developed, and thus the net result is a powerful learning
 experience allowed by seeing how real life understanding of things improved over
 time.
 
-For example, we will see how the Standard Template Library is what I classify
+There are  we will see how the Standard Template Library is what I classify
 as a major accomplishment of our civilization; despite how vastly superior it is
 today to anything comparable developed in any other language in the nearly 20
 years since it arose; currently C++ is on the verge of providing a significant
@@ -183,11 +198,12 @@ practitioners, hostile to theoriticians, and it does not have sponsorship of
 any kind except us its programmers.
 
 Most currently taught C++ is horrible bad.  The worst mistakes are emphasized as
-the mainstream way to program in it.
+the mainstream way to program in it, and the students or even the teachers don't
+know any better.
 
 Another related problem is that people who is completely ignorant of what C++
-truly is sincerely think and have a public reputation of knowing what C++ is, so
-their comments perpetuate an extreme misunderstanding of what it truly is.
+truly is sincerely think and have a public reputation of knowing what it is, so
+their comments perpetuate an extreme misunderstanding.
 
 The course has as its objective to empower the participants to see for
 themselves the true power of C++, it succeeded in its previous two iterations,
