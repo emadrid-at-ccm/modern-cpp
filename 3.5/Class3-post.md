@@ -35,24 +35,24 @@ I consider the rules for overload resolution as **clearly the most complicated t
 1. A very powerful pattern matching mechanism
 2. An extensibility mechanism (that is, to introduce new functionality to existing code without changing the existing code)
 3. Syntactical convenience, such as the benefits of operator overloading
-4. Generic programming: We can assign *semantics* to a name that will be adapted to each specific set of arguments, such as we don't need to know what are the types of `+`, we expect the right form of addition to happen.  Without overloads the only way to do any generic programming is through *type erasure*, that is, the equivalent of converting as in plain C to `const void *` or to `Object` in Java.  This form of type erasure is inherently error prone.
+4. Generic programming: We can assign *semantics* to a name that will be adapted to each specific set of arguments, such as we don't need to know what are the types of `+`, we expect the right form of addition to happen.  Without overloads the only way to do any generic programming is through *type erasure*, that is, the equivalent of converting as in plain C to `const void *` or to `Object` in Java (I think for the specific use case of `max`, the type erasure would be to convert an object to the interface, I think `Comparable`, it does not matter, the principle is the same, type information is *lost* to the compiler).  This form of type erasure is inherently error prone.
 
 Unfortunately, for all of its greatness, and inherent complexity, overload resolution rules in C++ abound with historical artifacts, language rules such as "Koenig's Lookup" (rules for when the function overload resolution looks into namespaces for matches, in honor of Andrew Koening); that after twenty years how to solve some annoyances continue to be open questions much debated.
+
+### Templates
  
- ### Templates
+For the code:
  
- For the code:
+```c++
+template<typename T> T max(T a1, T a2) { return a1 < a2 ? a2 : a1; }
+```
  
- ```c++
- template<typename T> T max(T a1, T a2) { return a1 < a2 ? a2 : a1; }
- ```
- 
- What is required of the type that may participate in a call to `max`?
- Nothing.  The type is not restricted in any way.
+What is required of the type that may participate in a call to `max`?
+Nothing.  The type is not restricted in any way.
  
 However, once overload resolution has selected that template, when compiling the call more requirements arise:  both arguments must be of the same type (that is what the code says, whatever the template type argument, both arguments to the function call are of the same type).  Furthermore, the type is *passed by value*, then the type needs to be copiable.  Then, in the *implementation* of the function, the requirement of the values to be comparable through `<`.  Please note there is a big difference between the *selection of an overload* and once the overload has been selected.  We will see much later that there is a technique called "SFINAE", which stands for the undecipherable acronym "Substitution Failure Is Not An Error", which is a fundamental pattern matching mechanism: Failure to select an overload is no error.  Once an overload *is* selected, *any* error is a "hard error", the program fails to build.
  
- ### Type Dispatch
+### Type Dispatch
  
 The technique of implementing a function by calling an implementation function with extra arguments that only convey type information to the compiler, typically, types represented by empty classes.  The extra arguments activate different patterns, type dispatch is one way to do pattern matching at compilation time.
 
@@ -63,6 +63,3 @@ Properties of types.  For example, `std::is_trivially_copiable`, `std::is_base`,
 ### Inheritance, CRTP
 
 Deferred to classes later.
-
-
- 
