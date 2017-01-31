@@ -8,16 +8,16 @@ From the point of view of course style, I prefer to introduce progressively the 
 
 IMO the presentation should drop the "type dependent" qualifier.  The techniques mentioned in the presentation:
  
- - Overloads
- - Templates
- - Type dispatch
- - Traits
- - Inheritance
- - CRTP
+- Overloads
+- Templates
+- Type dispatch
+- Traits
+- Inheritance
+- CRTP
  
- Are just tools in modern C++, they are all type-dependent because in modern C++ one plays with the types all the time.
+Are just tools in modern C++, they are all type-dependent because in modern C++ one plays with the types all the time.
  
- ### Overloads
+### Overloads
  
 In C++ the same function name can be used with different types.  The compiler will match the types given in the call to the *most specific match* among the definitions.
 
