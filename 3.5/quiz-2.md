@@ -1,6 +1,6 @@
 # Quiz 2
 
-#### After 3rd class, Mark Isaacson's presentation, first part and template argument deduction)
+#### After 3rd class, [Mark Isaacson's presentation](https://vimeo.com/131194141), first part and template argument deduction
 
 ## Necessary part
 
