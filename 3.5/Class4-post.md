@@ -13,7 +13,7 @@ Our non-random-access implementation has several performance disadvantages compa
 
 The interested student may perform several worthy experiments, for example:
 
-0. Count the comparisons `std::sort`, for example, sorting a container whose elements compare incrementing a counter, the same with swaps or moves
+0. Count the comparisons in `std::sort`, for example, sorting a container whose elements compare incrementing a counter, the same with swaps or moves
 1. Invoke `std::sort` with a container whose comparison operator is "opaque" to the compiler, and measure the relative performance hit.
 2. Invoke `std::sort` with a container whose element move or swap operations in an opaque way to the compiler, measure the performance hit.
 3. Do a type-dispatch `mysort` function that will call `std::sort` or this non-random access quicksort.
@@ -26,7 +26,7 @@ sort would be very inefficient for lists of elements that are very expensive to 
     3. You already know the fundamental mechanism to select among competing implementations, assume you can have traits or
     some compilation time mechanism to accomplish 1. and 2., and then make the code that will dispatch to optimal sort
     implementation functions.
-    4. How do you characterize elements that can be copied to a temporary buffer? This is important because we can accelerate sorting by copying elements to a temporary buffer.  By the way, there are many standard template library that do not require their elements to be copiable to temporaries, in which once you put an element in, the element never changes position.  This leads to hopefully interesting to you questions:
+    4. How do you characterize elements that can be copied to a temporary buffer? This is important because we can accelerate sorting by copying elements to a temporary buffer.  By the way, there are many standard template library containers that do not require their elements to be copiable to temporaries, in which once you put an element in, the element never changes position.  This leads to hopefully interesting to you questions:
         1. What should happen if the user has a container such as `vector` that is suitable for algorithms such as `std::sort` but that the programmers can instantiate with non-moveable elements, legitimately, and the user by mistake attempts to sort using `std::sort`?.
         2. Why would a programmer want to use non-moveable elements?
         3. A container such as `std::list` clearly does not require elements to be moved for operations that change the container such as adding elements, removing them, even sorting.  How is non-moveability accomplished with containers such as `std::vector`? (what should the programmer do?).  Use your intuition.  Good generic pieces of software do not require documentation to be used, the operations that should be present for the most part do exist and do what we expect, but generic programming require *good programmers* to take advantage of what it offers, that is, programmers with this kind of intuition well developed.
