@@ -34,7 +34,7 @@ sort would be very inefficient for lists of elements that are very expensive to 
 5. Make the sorting function faster, by implementing improvements that deal with the potential performance disadvantages 1,...,3 mentioned before.
 6. Make a sort algorithm which continues to be quicksort in essence but that does not degenerate into quadratic sorting if the input is already sorted.
 7. Paul's question, do pseudo code for a non-random access assumption quicksort which leverages parallelism.
-    1. Perhaps you should start with a simpler algorithm:  To accumulate all the elements in a large vector using parallelism, and the accumulation can be done *destructively*, that is, the vector may be left with whatever contents after accumulation.
+    1. Perhaps you should start with a simpler algorithm:  To accumulate all the elements in a large container using parallelism, and the accumulation can be done *destructively*, that is, the vector may be left with whatever contents after accumulation.
         1. What is the time complexity of that algorithm?
     2. It is clear the recursion step can be done in parallel.
         1. What about the partitioning?
