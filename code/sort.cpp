@@ -121,7 +121,22 @@ I partition_noRandomAccess(I pivot, I b, I e) {
 }
 
 template<typename I>
-void quicksortNoRandomAccess(I begin, I end) {
+I partition_noRandomAccessRotate(I pivot, I b, I e) {
+    while(b != e) {
+        if(*b < *pivot) {
+            // pivot <- b, b <- (pivot + 1), (pivot + 1) <- pivot
+            auto tmp = *pivot;
+            *pivot = *b;
+            *b = *++pivot;
+            *pivot = tmp;
+        }
+        ++b;
+    }
+    return pivot;    
+}
+
+template<typename I, typename ParFun>
+void quicksortNoRandomAccess_impl(I begin, I end, ParFun pf) {
     auto bPtr = &*begin;
     struct Frame {
         I b, e;
@@ -141,7 +156,8 @@ void quicksortNoRandomAccess(I begin, I end) {
         if(b != e) {
             auto pivot = b++;
             if(b != e) {
-                pivot = partition_noRandomAccess(pivot, b, e);
+                //pivot = partition_noRandomAccess(pivot, b, e);
+                pivot = pf(pivot, b, e);
                 ++index;
                 if(maxdepth < index) { maxdepth = index; }
                 if(50 <= index) { throw std::runtime_error("Exhausted"); }
@@ -154,6 +170,12 @@ void quicksortNoRandomAccess(I begin, I end) {
         }
         if(!index--) { break; }
     }
+}
+
+
+template<typename I>
+void quicksortNoRandomAccess(I begin, I end) {
+    quicksortNoRandomAccess_impl(begin, end, partition_noRandomAccess<I>);
 }
 
 template<typename I>
@@ -197,9 +219,19 @@ int main(int argc, const char *argv[]) {
     );
 
     copy = sample;
+    auto qsnra = [](int *l, int *r) {
+        quicksortNoRandomAccess(l, r);
+    };
     auto noRandomSort = benchmark(
-        quicksortNoRandomAccess<int *>, &copy[0], &copy[0] + copy.size()
+        qsnra, &copy[0], &copy[0] + copy.size()
     );
+    copy = sample;
+    auto rotate = benchmark(
+        quicksortNoRandomAccess_impl<int *, decltype(partition_noRandomAccessRotate<int *>)>,
+        &copy[0], &copy[0] + copy.size(), partition_noRandomAccessRotate<int *>
+    );
+
+
     std::cout << maxdepth << std::endl;
 
     copy = sample;
@@ -230,6 +262,6 @@ int main(int argc, const char *argv[]) {
     };
 
     auto cf = benchmark(cfbsf);
-    std::cout << stdsort << ' ' << qsort1 << ' ' << noRandomSort << ' ' << recursiveImpl << ' ' << conversion << ' ' << search1m << ' ' << cf << ' ' << acc << ':' << acc2 << std::endl;
+    std::cout << stdsort << ' ' << qsort1 << ' ' << noRandomSort << ' ' << rotate << ' ' << recursiveImpl << ' ' << conversion << ' ' << search1m << ' ' << cf << ' ' << acc << ':' << acc2 << std::endl;
     return 0;
 }
