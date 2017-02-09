@@ -92,7 +92,7 @@ unsigned CacheFriendlyBinarySearch::lower_bound(int value) const {
 }
 
 #include <iostream>
-
+#include <memory>
 #include <stdlib.h>
 
 void swap(int &l, int &r) {
@@ -186,7 +186,8 @@ int main(int argc, const char *argv[]) {
     }
     auto copy = sample;
 
-    auto stdsort = benchmark(std::sort<int *>, &copy[0], &copy[0] + copy.size());
+    void (*sf)(int *, int *) = std::sort;
+    auto stdsort = benchmark(sf, &copy[0], &copy[0] + copy.size());
 
     auto recopy = sample;
 
@@ -214,9 +215,9 @@ int main(int argc, const char *argv[]) {
             }
         );
 
-    CacheFriendlyBinarySearch *ptr;
+    std::unique_ptr<CacheFriendlyBinarySearch> ptr;
     auto conversion = benchmark(
-        [&]() { ptr = new CacheFriendlyBinarySearch{copy}; }
+        [&]() { ptr.reset(new CacheFriendlyBinarySearch{copy}); }
     );
     CacheFriendlyBinarySearch &cfbs = *ptr;
 
