@@ -54,7 +54,7 @@ To handle errors, the execution environment may define some way in which some er
 
 # Objective:
 
-The objective to program in a way in which you **ALLOW YOUR PROGRAMMER USERS TO BE OPTIMISTIC**.  What do I mean by this?
+The objective is to program in a way in which you **ALLOW YOUR PROGRAMMER USERS TO BE OPTIMISTIC**.  What do I mean by this?
 
 1. Errors can always happen (out of disk space, etc).  Optimism is not asking users to deny the reality that errors can happen, but that should an error happens:
     1. Just making the user code retriable is a perfectly sufficient way to handle any error:  If the things the user called succeeded, and the user code itself succeeded, then it is allowed to make an irreversible change.  If there is an error somewhere, and the code was written with this approach in mind, then no irreversible thing happened, the error will continue to propagate until there is a piece of code interested in handling it explicitly.
