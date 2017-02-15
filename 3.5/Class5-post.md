@@ -74,4 +74,4 @@ Although there is the [hierarchy](http://en.cppreference.com/w/cpp/error/excepti
 2. The operator `noexcept`
 3. The type traits that tell you whether some kind of operation may throw:
     1. In accordance to the recommendation above, the standard takes pains to guarantee operations are retriable.  For example the migration of memory buffer that may happen when a vector grows:  If the move constructor is "no-throw", then the migration is allowed to "move" the elements, as opposed to copying them.
-    2. Swap operations should not only be cheap, but nothrow.
+    2. Swap and move operations should not only be cheap, but nothrow.
