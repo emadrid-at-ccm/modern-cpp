@@ -63,3 +63,15 @@ The objective is to program in a way in which you **ALLOW YOUR PROGRAMMER USERS 
         3. Functional programming is in essence taking this approach to the ultimate consequences
 2. Code is not forced to be polluted with explicit error handling
 3. The user concentrates on their goal as opposed to the errors that can happen
+
+# Exceptions in the Standard Library
+
+Digression: Inheritance is used very sparingly in the standard library, in particular, always in relation to polymorphism.  For run time errors, the library defines a whole [class hierarchy](http://en.cppreference.com/w/cpp/error/exception) that grows with the progression of standards.  Can you mention an example not exceptions of runtime polymorphism and another example of compile-time polymorphism in the standard?
+
+Although there is the [hierarchy](http://en.cppreference.com/w/cpp/error/exception) of exceptions defined in the standard, I consider such use trivial.  There are two much more fundamental ways in which the language and standard library work with the issues related to exceptions:
+
+1. The indicator `noexcept`
+2. The operator `noexcept`
+3. The type traits that tell you whether some kind of operation may throw:
+    1. In accordance to the recommendation above, the standard takes pains to guarantee operations are retriable.  For example the migration of memory buffer that may happen when a vector grows:  If the move constructor is "no-throw", then the migration is allowed to "move" the elements, as opposed to copying them.
+    2. Swap operations should not only be cheap, but nothrow.
