@@ -14,13 +14,13 @@ This is the worst of all possible options, however, it is the most prevalent :di
 
 Error codes don't really have advantages, but it is important to understand the deficiencies that programmers ignore to their detriment.  Quoting [one of my lecture notes](https://github.com/emadrid-at-ccm/modern-cpp/blob/48c012556d53be7e2770c1e9996586b01ebea786/3.5/Class5-post.md#error-codes), and improving the explanations *in italics*:
 
-# Error Codes
-
 0. They require the programmer to consistently check for each function that may fail:
     1. Never done consistently in practice
     2. Introduces a performance penalty, the check itself
     3. Uglyfies the code
+1. The nature of errors is unbounded and unknowable at programming time, thus **it is unrealistic that programmers are going to be able to cover for any error that can happen in practice**
     4. Impossible to audit in practice *because error codes are arbitrary codes, in general, the compiler does not know which are the codes a function can return*
+    2. It is impossible in practice to test for all possible errors
 1. Error codes are just a code or a label for the problem that happened.
     1. The information that describes the error belongs to the execution context *the typical example is `errno`*
         1. Presents complications to make the information related to the error thread safe
@@ -44,22 +44,65 @@ Exceptions allow what I have referred to as "optimistic programming" in other do
 The user does not have to care about the errors that may occur as long as they follow good practices, in particular:
 
 1. Cleaning up in the destructors and
-2. Committing execution environment changes only when the transactions have completed.
+2. Committing execution environment changes only when the transactions have completed
+
+The exceptions support allow:
+
+1. Transactional semantics to be achievable, or that the programmer can be oblivious (optimistic) with respect to errors, the errors propagate, allowing the code to clean up after itself in a reliable way, up to the point the problem can be resolved.
+2. Don't force code that knows little about an error to have to deal with it.
+3. It only requires testing for whether the transactional semantics is achieved, which should not be dependent on the nature of the errors that may happen.
 
 With these two things, code that fails due to an exception being raised, won't damage the execution environment, and should be retriable, for no extra cost whatsoever to the programmer.
 
-Words of practical advice:
+## Words of practical advice:
 
-*. If your code wants to write a record to a file, please make sure it only writes complete records.  Keep a structure with the record partially formed as opposed to write the record partially to file; that way you benefit from the *transactional semantics* allowed by the excellent support for exceptions in C++: If something fails, your file does not get corrupted, you may try writing the record at a later time.
+* If your code wants to write a record to a file, please make sure it only writes complete records.  Keep a structure with the record partially formed as opposed to write the record partially to file; that way you benefit from the *transactional semantics* allowed by the excellent support for exceptions in C++: If something fails, your file does not get corrupted, you may try writing the record at a later time.
+* If you are writing `catch` to cleanup after yourself as opposed to being interested in *solving* the problem, you are doing it wrong.  Put the `catch` code in a destructor.  You will not have to remember to write the cleanup code, the compiler won't forget to put it.  Plus you introduce noise.  `catch` only when you want to try to solve the problem.
 
 This is an interesting topic, I invite the reader to consider these things:
 
 1. C++ does not have a `finally` clause because it does not need it.  `finally` is useful in other languages like Java for cleaning up resources if exceptions happen, the code that gets executed after the `try` regardless.  Proper C++ cleans after itself in the destructors, the destructors are called even when unwinding the stack to propagate exceptions.
 2. Currently C++ has what is called "zero cost" support for exceptions, which means that at runtime there is no thunking or framing of the stack to support exceptions, the frames are specified at compilation time, the exception mechanism searches based on the "Program Counter" or "Instruction Pointer" the frame where it is, that frame contains program code to deal with the exception.  This does not mean that exceptions, when they happen are "free of cost", just that *supporting* exceptions adds only the exception frame data to the object code, without any further runtime cost.  This is explained in [The true cost of zero cost exceptions](https://mortoray.com/2013/09/12/the-true-cost-of-zero-cost-exceptions/).
 3. There are complications, such as that destructors should not raise exceptions, since destructors are invoked from within exception propagations, supporting destructors that my throw may require the support of the propagation of more than one exception.  In C++ **raising an exception from within the context of an exception being thrown is program termination**.  This is the second of the reasons why destructors are the most important pieces of code (the other being that since they are always called, getting them right is essential for performance reasons).
-4. There is a problem with exceptions in general, which 
+4. There is a problem with exceptions in general, which is that they are implementation dependent and not related to the intention of the programmer.  This is what motivates even more sophisticated ways to deal with errors.
 
+# Error handler functions, callbacks
 
+Exceptions are good as much as they allow *transactional semantics*, if an error happens, then things can be retried.  But what about trying to make it so that they don't fail in the first place? perhaps the user may know that a problem may happen and have a solution ready if it does.  "The hard disk is close to full? no problem, I am going to give you a function to call me back if the space gets exhausted, I will then free up some space".  The same thing with dynamic or heap memory:  C++ already defines an important callback function, the one supplied to [`std::set_new_handler`](http://en.cppreference.com/w/cpp/memory/new/set_new_handler) for whenever dynamic memory is exhausted.
 
+Because of the template mechanism C++ provides much better support for this way of doing error handling than plain C.  If the invocation chain from the caller to the point where an error occurs are all templates, it is possible that the successive functions convey type information about the original caller, which gives the error handler more context to solve the issue.  A callback can then just fail if it can't solve the issue by raising an exception.
 
-[Bartosz Milewski](https://youtu.be/vkcxgagQ4bM?t=47m33s)
+# The monadic approach
+
+I am not setting about explaining what is a *monad* right now.  I liked [Monads in C++](https://bartoszmilewski.com/2011/07/11/monads-in-c/) by Bartosz Milewski.
+
+My audience will surely appreciate a more practical, and C++ centric explanation thanks to Alexei Alexandrescu in his presentation [Systematic Error Handling in C++](https://channel9.msdn.com/Shows/Going+Deep/C-and-Beyond-2012-Andrei-Alexandrescu-Systematic-Error-Handling-in-C).
+
+The exception mechanism, for all its virtues, suffers from (quoting liberally from Alexandrescu):
+
+1. Slow when they occur, you may want to support the occurrence of errors in cheaper ways
+2. Eminently serial:
+    1. There can be only one exception being propagating
+    2. It needs to be dealt with before any retrying
+    3. it requires its own control flow
+3. They tend to be an implementation detail not directly associated with the currently executing task or its objective.
+
+Then Alexandrescu proposes that exceptions be error codes, that is, that exceptions are taken care of by wrapping them in a container, and then actual processing of the errors may happen at the program's choice.
+
+Alexandrescu explains that there are very similar things, where `T` is the type of the value expected while calling a function:
+
+1. Haskell `Maybe T`
+2. Scala `Option[T]`
+3. C# `Nullable<T>`
+4. Boost C++ libraries, C++ 17 standard library `optional<T>`
+
+And he proposes `Expect<T>`, a template that roughly means "either a T value or the exception that occurred while trying to get it".  That is, Alexandrescu advocates "lifting" from the expected types to `Expected` of the expected types.  Alexandrescu then mentions other quasi-monads in the standard library such as `promise<T>` and `future<T>`.
+
+Dealing with a monad for errors has numerous advantages: They can respect `noexcept` boundaries, can be merged, "saved now and raised later", etc.
+
+With respect of non-obvious advantages of dealing with errors in a monadic way is the composability of the code that uses monads to deal with potential errors.  This is more abstract, better covered by people who may know less about C++ than us but know a lot more of functional programming, as a matter of fact, the inspiration to write these notes come from just having watched Bartosz Milewski's recent presentation "Monads for C++" that I link [at the 47:33 time mark, where he begins to cover `Option`](https://youtu.be/vkcxgagQ4bM?t=47m33s)
+
+# Outtroduction
+
+As a leaving remark, I would like to note that a good monad to handle exceptions must apply some technique of type erasure on the exception types, the component we are currently working on, [AnyContainer](https://github.com/thecppzoo/zoo/blob/master/reference/any.md) offers the type erasure capabilities required to support the wrapping of any exception type or value type, also, we are working on a design that I think is original, to allow the definition of user-selected visitations which will allow the complete implementation of monads.
+
