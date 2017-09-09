@@ -66,6 +66,16 @@ This is an interesting topic, I invite the reader to consider these things:
 3. There are complications, such as that destructors should not raise exceptions, since destructors are invoked from within exception propagations, supporting destructors that my throw may require the support of the propagation of more than one exception.  In C++ **raising an exception from within the context of an exception being thrown is program termination**.  This is the second of the reasons why destructors are the most important pieces of code (the other being that since they are always called, getting them right is essential for performance reasons).
 4. There is a problem with exceptions in general, which is that they are implementation dependent and not related to the intention of the programmer.  This is what motivates even more sophisticated ways to deal with errors.
 
+## Bad designs that abuse exceptions
+
+C++ is not good at returning more than one value from functions.  The situation has gotten better with `std::tie` and `std::tuple`, but it continues to be far from ideal.  Consequently, when a good API should return more than one value, designers may make mistakes.  I think the family of functions [`std::stoi, stol, stof, stod`, etc](http://en.cppreference.com/w/cpp/string/basic_string/stof) are deeply flawed: for the common case where the supplied string is not a number, they raise an exception.  This is eggregious because in any way you would determine if a string is a valid number you may as well convert it to the number; so, it is not possible to prevent the case of frequent exceptions being thrown.  What these functions should do is to return two things: the number and whether they succeeded.  I do this in my scheme for visitations of `any` (more on this below).
+
+Do not make this mistake.  The support for exceptions assumes exceptions are exceptional, as a programming technique they are:
+
+1. Expensive, disruptive and hard to reason about.
+2. May transfer control far from when they happen, potentially to program termination.
+3. Impose handling on programmers.
+
 # Error handler functions, callbacks
 
 Exceptions are good as much as they allow *transactional semantics*, if an error happens, then things can be retried.  But what about trying to make it so that they don't fail in the first place? perhaps the user may know that a problem may happen and have a solution ready if it does.  "The hard disk is close to full? no problem, I am going to give you a function to call me back if the space gets exhausted, I will then free up some space".  The same thing with dynamic or heap memory:  C++ already defines an important callback function, the one supplied to [`std::set_new_handler`](http://en.cppreference.com/w/cpp/memory/new/set_new_handler) for whenever dynamic memory is exhausted.
