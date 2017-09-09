@@ -98,11 +98,11 @@ Alexandrescu explains that there are very similar things, where `T` is the type 
 
 And he proposes `Expect<T>`, a template that roughly means "either a T value or the exception that occurred while trying to get it".  That is, Alexandrescu advocates "lifting" from the expected types to `Expected` of the expected types.  Alexandrescu then mentions other quasi-monads in the standard library such as `promise<T>` and `future<T>`.
 
-Dealing with a monad for errors has numerous advantages: They can respect `noexcept` boundaries, can be merged, "saved now and raised later", etc.
+Dealing with a monad for errors has numerous advantages: They can respect `noexcept` boundaries, can be merged, "saved now and raised later", the error can be associated with the data that led to the error, etc.
 
 With respect of non-obvious advantages of dealing with errors in a monadic way is the composability of the code that uses monads to deal with potential errors.  This is more abstract, better covered by people who may know less about C++ than us but know a lot more of functional programming, as a matter of fact, the inspiration to write these notes come from just having watched Bartosz Milewski's recent presentation "Monads for C++" that I link [at the 47:33 time mark, where he begins to cover `Option`](https://youtu.be/vkcxgagQ4bM?t=47m33s)
 
-# Outtroduction
+# Outroduction
 
 As a leaving remark, I would like to note that a good monad to handle exceptions must apply some technique of type erasure on the exception types, the component we are currently working on, [AnyContainer](https://github.com/thecppzoo/zoo/blob/master/reference/any.md) offers the type erasure capabilities required to support the wrapping of any exception type or value type, also, we are working on a design that I think is original, to allow the definition of user-selected visitations which will allow the complete implementation of monads.
 
