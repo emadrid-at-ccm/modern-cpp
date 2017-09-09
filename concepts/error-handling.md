@@ -76,6 +76,8 @@ Do not make this mistake.  The support for exceptions assumes exceptions are exc
 2. May transfer control far from when they happen, potentially to program termination.
 3. Impose handling on programmers.
 
+If a function can fail, such as `std::stoi`, then sometimes it may not be able to produce a good return value, which suggests that the programmer that wants to consume a value of that type should perhaps build a default that can be supplied to the function in case the function overwrites it.  Then, the function should return something that may be interpreted as a boolean.  This way, the user may choose to deal with the failure if the default value is not good enough.  This solution asks of the programmer to only build a default value.  That is much better than forcing them to deal with exceptions, and their runtime cost.
+
 # Error handler functions, callbacks
 
 Exceptions are good as much as they allow *transactional semantics*, if an error happens, then things can be retried.  But what about trying to make it so that they don't fail in the first place? perhaps the user may know that a problem may happen and have a solution ready if it does.  "The hard disk is close to full? no problem, I am going to give you a function to call me back if the space gets exhausted, I will then free up some space".  The same thing with dynamic or heap memory:  C++ already defines an important callback function, the one supplied to [`std::set_new_handler`](http://en.cppreference.com/w/cpp/memory/new/set_new_handler) for whenever dynamic memory is exhausted.
