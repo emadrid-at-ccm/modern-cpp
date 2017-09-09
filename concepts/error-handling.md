@@ -95,6 +95,7 @@ Alexandrescu explains that there are very similar things, where `T` is the type 
 2. Scala `Option[T]`
 3. C# `Nullable<T>`
 4. Boost C++ libraries, C++ 17 standard library `optional<T>`
+5. I would say that boost and C++ 17 standard librry `any` is relevant, since they also allow holding the exception
 
 And he proposes `Expect<T>`, a template that roughly means "either a T value or the exception that occurred while trying to get it".  That is, Alexandrescu advocates "lifting" from the expected types to `Expected` of the expected types.  Alexandrescu then mentions other quasi-monads in the standard library such as `promise<T>` and `future<T>`.
 
