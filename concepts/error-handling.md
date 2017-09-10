@@ -19,10 +19,10 @@ Error codes don't really have advantages, but it is important to understand the 
     2. Introduces a performance penalty, the check itself
     3. Uglyfies the code
 1. The nature of errors is unbounded and unknowable at programming time, thus **it is unrealistic that programmers are going to be able to cover for any error that can happen in practice**
-    4. Impossible to audit in practice *because error codes are arbitrary codes, in general, the compiler does not know which are the codes a function can return*
-    2. It is impossible in practice to test for all possible errors
+    1. Impossible to audit in practice *because error codes are arbitrary codes, in general, the compiler does not know which are the codes a function can return*
+    1. It is impossible in practice to test for all possible errors
 1. Error codes are just a code or a label for the problem that happened.
-    1. The information that describes the error belongs to the execution context *the typical example is `errno`*
+    1. The information that describes the error belongs to the execution context, *A typical example is **`errno`***.
         1. Presents complications to make the information related to the error thread safe
         2. It is global to the process, ephemeral: The error information must be checked immediately before calling anything that could overwrite it if there are further errors.  *This forces the program to tend to errors immediately, even if they are not interested in solving them*
 2. It is a brittle mechanism: If some function changes and may have a new error code, what is the guarantee all the callers, and the callers of the callers that do not "swallow" the error will correctly deal with the new code?
